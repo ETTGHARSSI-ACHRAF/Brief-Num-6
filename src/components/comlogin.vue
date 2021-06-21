@@ -71,7 +71,7 @@ export default {
   }
 
   .container{
-      padding-top: 5%;
+      padding-top: 6%;
     width: 40%;
     height: 50%;
     margin-left: 30%;

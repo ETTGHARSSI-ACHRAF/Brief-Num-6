@@ -39,6 +39,19 @@ class ApiRendezvous{
         }
     }
     
+
+    //afficher la table rendez vous avec la condition de reference
+
+    function ReadwherDate($DateConsult){
+        if($_SERVER["REQUEST_METHOD"]=="GET"){
+            // $requestBody=$this->handle_request();
+            $rendez=new Rendezvous();
+            // $rendez->DateConsult=$requestBody->DateConsult;
+            $rendez->DateConsult=$DateConsult;
+            $result =$rendez->readWithDate();
+            echo json_encode($result);
+        }
+    }
     //ajouter colone dans la table rendez vous
 
     function Create(){

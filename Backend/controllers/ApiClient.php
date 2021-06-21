@@ -38,6 +38,7 @@ class ApiClient{
             $clt->Age=$Age;
             $clt->Tele=$Tele;
             $clt->creat();  
+            echo json_encode($Reference);
         }
             
     }

@@ -44,6 +44,7 @@ export default {
 			Email:'',
 			Tele:'',
 			Age:'',
+			reference:'',
 		}
 		
 	},
@@ -63,8 +64,13 @@ export default {
 					Tele:this.Tele
 				})
 			})
-			.then(() => {
-				this.$router.push({ path: '/liste' })
+			.then((res) => {
+				return res.json();
+				// this.$router.push({ path: '/liste' })
+			})
+			.then((res)=>{
+				this.reference=res;
+				this.$router.push("/liste/"+this.reference);
 			})
 			.catch(function(err){
 				console.log(err);

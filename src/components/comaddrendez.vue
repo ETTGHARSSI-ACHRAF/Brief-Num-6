@@ -13,10 +13,11 @@
         <label  class="form-label">Horaire</label>
         <select class="form-select input"  v-model="Horaire">
                 <option></option>
-                <option value="8">8-10</option>
+                <!-- <option value="8">8-10</option>
                 <option value="10">10-12</option>
                 <option value="14">14-16</option>
-                <option value="16">16-18</option>
+                <option value="16">16-18</option> -->
+                <option v-for="heure in heures" :key="heure.value" :disabled="heure.etat">{{heure.value}}</option>
         </select>
   </div>
 
@@ -44,13 +45,61 @@ export default {
       DateConsult: "",
       Horaire :"",
       TypeConsult: "",
-      Reference:this.$route.params.reference
-      
+      Reference:this.$route.params.reference,
+      heuresapi:[],
+      heures:[
+        {
+          "value" : "8",
+          "etat" : true
+        },
+        {
+          "value" : "9",
+          "etat" : true
+        },
+        {
+          "value" : "10",
+          "etat" : true
+        },
+        {
+          "value" : "11",
+          "etat" : true
+        },
+        {
+          "value" : "14",
+          "etat" : true
+        },
+        {
+          "value" : "15",
+          "etat" : true
+        },
+        {
+          "value" : "16",
+          "etat" : true
+        },
+        {
+          "value" : "17",
+          "etat" : true
+        }
+      ]
     
     };
   },
 
 methods:{
+    async getDate(val){
+        const response= await fetch("http://localhost/Brief6/Backend/ApiRendezVous/ReadwherDate/"+val,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+
+        );
+        
+         const data = await response.json();
+           this.heuresapi = data;
+    },
   //ajouter un rendez voous par reference:
   addrendezvous(){
 
@@ -79,6 +128,22 @@ methods:{
     },
         
   },
+  watch:{
+    DateConsult:async function(val)
+    {
+      await this.getDate(val);
+      // await (this.DateConsult = val);
+      for(var i=0;i< this.heures.length;i++){
+            this.heures[i].etat= true;
+          for (var j=0;j<this.heuresapi.length;j++){
+          if(this.heures[i].value != this.heuresapi[j].Horaire){
+            this.heures[i].etat=false;
+          }
+          }
+        
+      }
+    }
+  }
 };
 
 </script>

@@ -6,23 +6,24 @@
   <h2 class="text-center">Modifier un Rendez vous</h2>
   <div class="mb-3 col-10 ms-5">
         <label class="form-label">Date</label>
-        <input  type="date" class="form-control" v-model="Rredezvous[0].DateConsult"  >
+        <input  type="date" class="form-control"  v-model="DateConsult" >
   </div>
         
   <div class="mb-3 col-10 ms-5">
-        <label  class="form-label">Horaire</label>
-        <select class="form-select input" >
-                <option></option>
+        <label  class="form-label" >Horaire</label>
+        <select class="form-select input" v-model="Horaire"  >
+                <!-- <option></option>
                 <option value="8">8-10</option>
                 <option value="10">10-12</option>
                 <option value="14">14-16</option>
-                <option value="16">16-18</option>
+                <option value="16">16-18</option> -->
+                <option v-for="heure in heures" :key="heure">{{heure}}</option>
         </select>
   </div>
 
   <div class="mb-3 col-10 ms-5 description">
-        <label  class="form-label">Description :</label>
-        <textarea class="form-control" v-model="Rredezvous[0].TypeConsult"></textarea>
+        <label  class="form-label" >Description :</label>
+        <textarea class="form-control" v-model="TypeConsult" ></textarea>
   </div>
 
   <div class="mb-3 col-10 ms-5">
@@ -41,8 +42,12 @@ export default {
     name:'updaterendezvous',
    data() {
     return {
-      Rredezvous:{},
-      // id=this.$route.params.id,
+      // Rredezvous:[],
+      DateConsult:'',
+      Horaire:'',
+      TypeConsult:'',
+      Reference:'',
+      heures:[8,9,10,11,14,15,16,17]
     };
 
   },
@@ -64,18 +69,44 @@ methods:{
           return res.json();
         })
         .then((res) => {
-          this.Rredezvous = res;
-          // console.log(res);
+          // this.Rredezvous = res;
+          // console.log(res[0].DateConsult);
+          this.DateConsult=res[0].DateConsult;
+          this.Horaire=res[0].Horaire;
+          this.TypeConsult=res[0].TypeConsult;
+          this.Reference=res[0].Reference;
           // console.log(this.Rredezvous);
         })
         .catch((err) => {
           console.log(err);
         });
-      // console.log(this.$route.params.id);
     },
     updaterendezvous(){
-      // console.log('achreaf');
       // console.log(TypeConsult);
+      // console.log(TypeConsult);
+      // console.log(this.Horaire);
+      fetch("http://localhost/Brief6/Backend/ApiRendezVous/Update/"+this.$route.params.id,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            DateConsult: this.DateConsult,
+            Horaire: this.Horaire,
+            TypeConsult: this.TypeConsult,
+            Reference:this.Reference
+        
+          }),
+        }
+
+        ).then(() => {
+              this.$router.push("/liste/"+this.Reference);
+        })
+
+        .catch(function (err) {
+           console.log(err);
+        });
     }    
   },
   mounted() {

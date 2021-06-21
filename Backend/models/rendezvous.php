@@ -14,12 +14,13 @@ class Rendezvous
        $this->db=new Connexion();
     }
     //---seterse-----
-    public function __set($property, $value) {
+    public function __set($property, $value) 
+    {
         if (property_exists($this, $property)) {
           $this->$property = $value;
         }
         return $this;
-      }
+    }
 
     function creat()
     {
@@ -29,10 +30,12 @@ class Rendezvous
     {
         $this->db->execution("UPDATE `rendezvous` SET `DateConsult`='".$this->DateConsult."',`TypeConsult`='".$this->TypeConsult."',`Horaire`='".$this->Horaire."',`Reference`='".$this->Reference."' WHERE Id=".$this->Id);
     }
-    function delete(){
+    function delete()
+    {
         $this->db->execution("DELETE FROM `rendezvous` WHERE Id=".$this->Id);
     }
-    function readAll(){
+    function readAll()
+    {
         $this->db->execution("SELECT * FROM `rendezvous`");
         return $this->db->selectAll();
     }
@@ -49,5 +52,12 @@ class Rendezvous
         return $this->db->selectAll();
     }
       
+    function readWithDate()
+    {
+        // echo "SELECT * FROM `rendezvous` WHERE DateConsult='".$this->DateConsult."'";
+        $this->db->execution("SELECT Horaire FROM `rendezvous` WHERE DateConsult='".$this->DateConsult."'");
+        return $this->db->selectAll();
+    }
 }
+
 ?>

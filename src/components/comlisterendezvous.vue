@@ -42,13 +42,13 @@ export default {
   data() {
     return {
       rendervous: [],
-      reference:this.$route.params.reference,
+      // reference:this.$route.params.reference,
     };
   },
   methods: {
     remplir() {
       fetch(
-        "http://localhost/Brief6/Backend/ApiRendezvous/ReadCondition/"+this.reference,
+        "http://localhost/Brief6/Backend/ApiRendezvous/ReadCondition/"+this.$route.params.reference,
         {
           method: "GET",
           headers: {
