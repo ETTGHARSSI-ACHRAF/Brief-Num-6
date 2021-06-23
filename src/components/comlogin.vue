@@ -43,11 +43,12 @@ export default {
         })
         .then((res) => {      
             if(res==1){
+              localStorage.setItem("tach",this.reference);
                 this.$router.push("/liste/"+this.reference);
             }else{
                 alert('Reference incorrecte');
             }
-        console.log(res);
+        // console.log(res);
         })
         .catch((err) => {
           console.log(err);

@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="res in rendervous" :key="res.Reference" >
+            <tr v-for="res in rendervous" :key="res.id" >
               <td>{{ res.DateConsult }}</td>
               <td>{{ res.Horaire }}</td>
               <td>{{ res.TypeConsult }}</td>
@@ -92,6 +92,8 @@ export default {
     }
   },
   mounted() {
+    
+    console.log(localStorage.getItem("tach"));
     this.remplir();
   }
 };
